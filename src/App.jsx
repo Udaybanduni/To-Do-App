@@ -5,7 +5,6 @@ function App() {
   const [task, setTask] = useState('');
   const [todos, setTodos] = useState([]);
 
-  // Load todos from localStorage on first render
   useEffect(() => {
     const savedTodos = JSON.parse(localStorage.getItem('todos'));
     if (savedTodos) {
@@ -13,25 +12,21 @@ function App() {
     }
   }, []);
 
-  // Save todos to localStorage whenever todos change
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  // Add Task
   const addTask = () => {
     if (task.trim() === '') return;
     setTodos([...todos, { text: task, completed: false }]);
     setTask('');
   };
 
-  // Delete Task
   const deleteTask = (index) => {
     const updatedTodos = todos.filter((_, i) => i !== index);
     setTodos(updatedTodos);
   };
 
-  // Toggle Completed
   const toggleComplete = (index) => {
     const updatedTodos = todos.map((t, i) =>
       i === index ? { ...t, completed: !t.completed } : t
